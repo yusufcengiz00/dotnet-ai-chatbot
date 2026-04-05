@@ -61,3 +61,6 @@ dotnet run
 // Cevap:
 { "cevap": "Ben bir yapay zeka asistanıyım..." }
 ```
+
+<img width="1376" height="425" alt="postman-demo" src="https://github.com/user-attachments/assets/82eef07a-7b8a-4cf3-ad55-0716598ae71e" />
+
