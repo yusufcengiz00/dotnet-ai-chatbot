@@ -2,14 +2,15 @@ using Chatbot.AI_Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+// User Secrets'tan verileri çek
+var apiKey = builder.Configuration["GroqApiKey"];
+var connectionString = builder.Configuration.GetConnectionString("PostgreSQL");
 
-var groqApiKey = builder.Configuration["GroqApiKey"];
-builder.Services.AddSingleton(new ChatService(groqApiKey!));
+// Servisi kaydet
+builder.Services.AddSingleton(new ChatService(apiKey, connectionString));
+
+builder.Services.AddControllers();
 var app = builder.Build();
 
-
 app.MapControllers();
-app.MapGet("/", () => "Hello World!");
-
 app.Run();
