@@ -1,7 +1,7 @@
 # 🤖 .NET AI Chatbot API
 
 ![.NET](https://img.shields.io/badge/.NET-10.0-512BD4?style=for-the-badge&logo=dotnet)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-316192?style=for-the-badge&logo=postgresql)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18-316192?style=for-the-badge&logo=postgresql)
 ![Groq](https://img.shields.io/badge/Groq-Llama_3.3-F54E00?style=for-the-badge)
 ![Lisans](https://img.shields.io/badge/lisans-MIT-green?style=for-the-badge)
 
@@ -26,7 +26,7 @@ Bu proje, aynı problemi iki farklı yaklaşımla çözerek mimari farkları ort
 
 - **Runtime:** .NET 10 / ASP.NET Core
 - **Yapay Zeka:** Groq API — Llama 3.3 70B (OpenAI uyumlu)
-- **Veritabanı:** PostgreSQL 17 + Dapper (hafif ORM)
+- **Veritabanı:** PostgreSQL 18 + Dapper (hafif ORM)
 - **Güvenlik:** .NET User Secrets (API key yönetimi)
 
 ---
