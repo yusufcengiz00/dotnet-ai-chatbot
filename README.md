@@ -81,11 +81,6 @@ dotnet run
 
 ## 📡 API Endpoint'leri
 
-### `GET /api/restAPIControllers/merhaba`
-```json
-{ "mesaj": "Merhaba Gama Mühendislik!" }
-```
-
 ### `POST /api/restAPIControllers`
 ```json
 // İstek:
