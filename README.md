@@ -1,27 +1,52 @@
 # 🤖 .NET AI Chatbot API
 
-ASP.NET Core ile geliştirilmiş, Groq LLM entegrasyonu içeren AI Chatbot API projesi.  
-İki farklı yaklaşımla aynı proje geliştirilmiştir: **Minimal API** ve **Controller tabanlı API**.
+![.NET](https://img.shields.io/badge/.NET-10.0-512BD4?style=for-the-badge&logo=dotnet)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-316192?style=for-the-badge&logo=postgresql)
+![Groq](https://img.shields.io/badge/Groq-Llama_3.3-F54E00?style=for-the-badge)
+![Lisans](https://img.shields.io/badge/lisans-MIT-green?style=for-the-badge)
+
+ASP.NET Core 10 ile geliştirilmiş, Groq LLM entegrasyonu, Dapper ile PostgreSQL mesaj kaydı ve iki farklı mimari yaklaşım içeren AI Chatbot API projesi.
 
 ---
 
-## 📁 Proje Yapısı
-dotnet-ai-chatbot/
-├── MinimalAPI/       → app.MapPost ile endpoint tanımlama
-├── ControllerAPI/    → [HttpPost] ile Controller tabanlı yapı
+## 🏗️ Mimari Kararlar
+
+Bu proje, aynı problemi iki farklı yaklaşımla çözerek mimari farkları ortaya koymak amacıyla tasarlanmıştır.
+
+| | Minimal API | Controller API |
+|---|---|---|
+| **Yapı** | `app.MapPost()` | `[HttpPost]` attribute |
+| **Kullanım** | Küçük/microservice projeler | Kurumsal, büyük ekipler |
+| **Esneklik** | Yüksek | Orta |
+| **Okunabilirlik** | Büyüdükçe zorlaşır | Her zaman düzenli |
 
 ---
 
 ## 🛠️ Kullanılan Teknolojiler
 
-- .NET 10
-- ASP.NET Core Web API
-- Groq API (LLM - llama-3.3-70b)
-- OpenAI uyumlu .NET paketi
+- **Runtime:** .NET 10 / ASP.NET Core
+- **Yapay Zeka:** Groq API — Llama 3.3 70B (OpenAI uyumlu)
+- **Veritabanı:** PostgreSQL 17 + Dapper (hafif ORM)
+- **Güvenlik:** .NET User Secrets (API key yönetimi)
+
+---
+
+## ✨ Özellikler
+
+- 🧠 Groq API üzerinden gerçek zamanlı LLM cevapları
+- 💾 Mesajların PostgreSQL'e asenkron kaydedilmesi
+- 📜 Mesaj geçmişi listeleme
+- 🔐 User Secrets ile güvenli API key yönetimi
+- 🏗️ İki farklı API mimarisi: Minimal API ve Controller tabanlı
 
 ---
 
 ## 🚀 Kurulum
+
+### Gereksinimler
+- [.NET 10 SDK](https://dotnet.microsoft.com/download)
+- [PostgreSQL 18](https://www.postgresql.org/download)
+- [Groq API Key](https://console.groq.com) (ücretsiz)
 
 ### 1. Repoyu klonla
 ```bash
@@ -29,14 +54,22 @@ git clone https://github.com/yusufcengiz00/dotnet-ai-chatbot.git
 cd dotnet-ai-chatbot
 ```
 
-### 2. Groq API key al
-[console.groq.com](https://console.groq.com) adresinden ücretsiz hesap aç ve API key oluştur.
+### 2. Veritabanı tablosunu oluştur
+```sql
+CREATE TABLE chat_history (
+    id SERIAL PRIMARY KEY,
+    user_message TEXT NOT NULL,
+    bot_response TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
 
-### 3. API key'i kaydet
+### 3. API key ve bağlantı bilgilerini kaydet
 ```bash
 cd ControllerAPI
 dotnet user-secrets init
-dotnet user-secrets set "GroqApiKey" "senin_key_in"
+dotnet user-secrets set "GroqApiKey" "groq_api_key_in"
+dotnet user-secrets set "ConnectionStrings:PostgreSQL" "Host=localhost;Port=5432;Database=chatbot;Username=postgres;Password=sifren"
 ```
 
 ### 4. Çalıştır
@@ -46,14 +79,14 @@ dotnet run
 
 ---
 
-## 📡 Endpoint'ler
+## 📡 API Endpoint'leri
 
-### GET /api/restAPIControllers/merhaba
+### `GET /api/restAPIControllers/merhaba`
 ```json
 { "mesaj": "Merhaba Gama Mühendislik!" }
 ```
 
-### POST /api/restAPIControllers
+### `POST /api/restAPIControllers`
 ```json
 // İstek:
 { "mesaj": "Merhaba, sen kimsin?" }
@@ -62,5 +95,27 @@ dotnet run
 { "cevap": "Ben bir yapay zeka asistanıyım..." }
 ```
 
+### `GET /api/restAPIControllers/history`
+Tüm mesaj geçmişini listeler.
+```json
+[
+  {
+    "id": 1,
+    "user_message": "Merhaba!",
+    "bot_response": "Merhaba, nasıl yardımcı olabilirim?",
+    "created_at": "2026-04-06T12:00:00"
+  }
+]
+```
+
+---
+
+## 📸 Demo
+
 <img width="1376" height="425" alt="postman-demo" src="https://github.com/user-attachments/assets/82eef07a-7b8a-4cf3-ad55-0716598ae71e" />
 
+---
+
+## 📄 Lisans
+
+MIT
